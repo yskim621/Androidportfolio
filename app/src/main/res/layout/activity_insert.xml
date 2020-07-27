@@ -23,5 +23,10 @@
         android:layout_height="wrap_content"
         android:hint="설명을 입력하세요"
         android:id="@+id/descriptioninput"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="데이터 추가"
+        android:id="@+id/btninsert"/>
 
 </LinearLayout>
