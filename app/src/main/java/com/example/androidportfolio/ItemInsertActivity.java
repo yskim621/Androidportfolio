@@ -16,7 +16,6 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -24,7 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
 
-public class InsertActivity extends AppCompatActivity {
+public class ItemInsertActivity extends AppCompatActivity {
     EditText itemnameinput, priceinput, descriptioninput;
     Button btninsert;
 
@@ -144,7 +143,7 @@ public class InsertActivity extends AppCompatActivity {
         public void handleMessage(Message message){
             boolean result = (Boolean) message.obj;
             if(result == true){
-                Toast.makeText(InsertActivity.this, "삽입 성공", Toast.LENGTH_LONG).show();
+                Toast.makeText(ItemInsertActivity.this, "삽입 성공", Toast.LENGTH_LONG).show();
 
                 // 키보드 내리기
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -152,7 +151,7 @@ public class InsertActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(priceinput.getWindowToken(), 0);
                 imm.hideSoftInputFromWindow(descriptioninput.getWindowToken(), 0);
             }else {
-                Toast.makeText(InsertActivity.this, "삽입 실패", Toast.LENGTH_LONG).show();
+                Toast.makeText(ItemInsertActivity.this, "삽입 실패", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -161,7 +160,7 @@ public class InsertActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insert);
+        setContentView(R.layout.activity_item_insert);
 
         itemnameinput = (EditText) findViewById(R.id.itemnameinput);
         priceinput = (EditText) findViewById(R.id.priceinput);
@@ -172,15 +171,15 @@ public class InsertActivity extends AppCompatActivity {
             public void onClick(View view){
                 // 유효성 검사
                 if(itemnameinput.getText().toString().trim().length() < 1){
-                    Toast.makeText(InsertActivity.this, "이름은 필수 입력입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItemInsertActivity.this, "이름은 필수 입력입니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(priceinput.getText().toString().trim().length() < 1){
-                    Toast.makeText(InsertActivity.this, "가격은 필수 입력입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItemInsertActivity.this, "가격은 필수 입력입니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(descriptioninput.getText().toString().trim().length() < 1){
-                    Toast.makeText(InsertActivity.this, "설명은 필수 입력입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItemInsertActivity.this, "설명은 필수 입력입니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 new InsertThread().start();
