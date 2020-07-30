@@ -36,18 +36,11 @@
             android:id="@+id/btnnext"/>
 
     </LinearLayout>
-    <ScrollView
+
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/list"/>
-
-
-
-    </ScrollView>
-
+        android:layout_height="match_parent"
+        android:id="@+id/listview"/>
 
 
 </LinearLayout>

@@ -15,7 +15,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/passwordinput"
+        android:id="@+id/pwinput"
         android:inputType="textPassword"
         android:hint="비밀번호를 입력하세요."/>
 
@@ -44,5 +44,10 @@
             android:id="@+id/btnmain"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imgprofile"/>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
     //콤보 박스 역할을 하는 위젯
@@ -29,7 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnsearch, btnnext;
 
-    private TextView list;
+    //private TextView list;
+
+    private ListView listView;
+    private List<Item> list;
+    private ArrayAdapter<Item> itemAdapter;
 
     //Spinner에 데이터를 연결할 Adapter
     private ArrayAdapter<CharSequence> adapter;
@@ -48,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message message){
-            list.setText(result);
+            //list.setText(result);
+
+            // adapter를 이용해서 Listview에 데이터가 수정되면 다시 출력하도록 [신호를 보냄 - notification]
+            itemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -116,7 +126,15 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray ar = object.getJSONArray("list");
                 for(int i=0; i<ar.length(); i=i+1){
                     JSONArray temp = ar.getJSONArray(i);
-                    result = result + temp.getString(1) + "\n";
+                    // result = result + temp.getString(1) + "\n";
+                    Item item = new Item();
+                    item.itemid = temp.getInt(0);
+                    item.itemname = temp.getString(1);
+                    item.price = temp.getInt(2);
+                    item.description = temp.getString(3);
+                    item.pictureurl = temp.getString(4);
+
+                    list.add(item);
                 }
                 //핸들러에게 출력을 요청
                 handler.sendEmptyMessage(0);
@@ -141,7 +159,13 @@ public class MainActivity extends AppCompatActivity {
         value = (EditText)findViewById(R.id.value);
         btnnext = (Button)findViewById(R.id.btnnext);
         btnsearch = (Button)findViewById(R.id.btnsearch);
-        list = (TextView)findViewById(R.id.list);
+        // list = (TextView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.listview);
+        list = new Stack<Item>();
+        itemAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+
+        listView.setAdapter(itemAdapter);
+
 
         btnnext.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v){
