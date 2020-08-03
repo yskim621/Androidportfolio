@@ -2,6 +2,7 @@ package com.example.androidportfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -86,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         public void run(){
             try{
+
+
                 URL url = null;
                 //콤보 박스 선택한 항목 번호를 idx에 저장
                 int idx = searchtype.getSelectedItemPosition();
@@ -201,7 +204,16 @@ public class MainActivity extends AppCompatActivity {
                 //선택한 항목의 데이터
                 Item item = list.get(i);
                 //토스트로 itemid를 출력
-                Toast.makeText(MainActivity.this, item.itemid + "", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, item.itemid + "", Toast.LENGTH_LONG).show();
+
+                //하위 Activity 출력
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+
+                //데이터 전달하기 - itemid를 전달
+                intent.putExtra("itemid", item.itemid);
+
+                //액티비티 호출
+                startActivity(intent);
             }
         });
 
@@ -284,7 +296,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        new ThreadEx().start();
-        ind.setVisibility(View.VISIBLE);
+        //데이터가 없을 때만 데이터를 가져오기
+        if(list == null || list.size() < 1) {
+            new ThreadEx().start();
+            ind.setVisibility(View.VISIBLE);
+        }
     }
 }

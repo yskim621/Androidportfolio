@@ -2,6 +2,7 @@ package com.example.androidportfolio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,7 +58,12 @@ public class ItemDetailActivity extends AppCompatActivity {
             //텍스트 데이터 다운로드
             try{
                 //URL 만들기
-                URL url = new URL("http://192.168.0.109:8080/yskim62100/detail?itemid=" + 1);
+                //호출하는 인텐트 가져오기
+                Intent intent = getIntent();
+
+                //itemid의 값을 정수로 가져오고 없을 때 1
+                int itemid = intent.getIntExtra("itemid", 1);
+                URL url = new URL("http://192.168.0.109:8080/yskim62100/detail?itemid=" + itemid);
 
                 //Connection 객체 만들기
                 HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -172,5 +180,14 @@ public class ItemDetailActivity extends AppCompatActivity {
         lblprice = (TextView)findViewById(R.id.lblprice);
 
         imgpictureurl = (ImageView)findViewById(R.id.imgpictureurl);
+
+        Button backbtn = (Button)findViewById(R.id.backbtn);
+        backbtn.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View view){
+
+                //현재 Activity 종료
+                finish();
+            }
+        });
     }
 }
